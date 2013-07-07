@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<rootTag>
+<root>
     <common>
         <sessionKey>commonsession</sessionKey>
         <dateTime>2013/07/04</dateTime>
     </common>
-    <bizTag type="a101BizTag">
+    <a101tag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a101BizTag">
         <messageKey>ComBizMessageKey</messageKey>
         <a101Str>A101Message</a101Str>
-    </bizTag>
-</rootTag>
+    </a101tag>
+</root>

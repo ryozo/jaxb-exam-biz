@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<common>
+		<sessionKey>commonkey</sessionKey>
+		<dateTime>YYYY/MM/DD HH:MI:SS</dateTime>
+	</common>
+	<a101tag>
+		<messageKey>msgkey</messageKey>
+		<a101Str>a101Str</a101Str>
+	</a101tag>
+</root>

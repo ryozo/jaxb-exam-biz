@@ -3,6 +3,7 @@ package elements.fw;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -17,22 +18,22 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author W.Ryozo
  *
  */
-@XmlRootElement
+@XmlRootElement(name="root")
+@XmlType(propOrder={"common", "business"})
 public class RootTag implements Serializable {
-	
+
 	/** SerialVersionUID */
 	public static final long serialVersionUID = 1L;
 
 	/** CommonTag */
 	public CommonTag common;
-	
+
 	/**
-	 * BizTag<br >
 	 * 個々の業務を表すタグ。{@link BizTag}はAbstractであり、
 	 * 実際は個々の業務が利用するタグ情報を格納する。
 	 */
-	public BizTag bizTag;
-	
+	public BizTag business;
+
 	@Override
 	public String toString() {
 		return new ReflectionToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).toString();
