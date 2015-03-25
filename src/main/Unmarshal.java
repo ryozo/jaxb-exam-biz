@@ -17,7 +17,7 @@ public class Unmarshal {
 	private static final File INFILE = new File("in/in.xml");
 
 	public static void main(String[] args) throws Exception {
-		JAXBContext context = JAXBContext.newInstance(RootTag.class,A101BizTag.class);
+		JAXBContext context = JAXBContext.newInstance(RootTag.class, A101BizTag.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 
 		RootTag tag = (RootTag) unmarshaller.unmarshal(INFILE);

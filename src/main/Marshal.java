@@ -1,7 +1,5 @@
 package main;
 
-import java.io.File;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
@@ -15,15 +13,12 @@ import elements.fw.RootTag;
  *
  */
 public class Marshal {
-
-	private static final File OUTFILE = new File("out/out.xml");
-
+	
 	public static void main(String[] args) throws Exception {
 		JAXBContext context = JAXBContext.newInstance(RootTag.class,A101BizTag.class);
 		Marshaller marshaller = context.createMarshaller();
 
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//		marshaller.marshal(createTag(), OUTFILE);
 		marshaller.marshal(createTag(), System.out);
 	}
 

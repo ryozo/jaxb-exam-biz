@@ -1,9 +1,8 @@
 package main;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,10 +20,10 @@ import elements.fw.CommonTag;
  */
 public class ExcerptUnmarshalWithStAX {
 
-	/** マーシャル対象のXML */
-	private static final File INPUT_FILE = new File("in/in.xml");
+	/** アンマーシャル対象のXML */
+	private static final String TARGET_PATH = "in/in.xml";
 
-	/** マーシャル対象のタグクラス */
+	/** アンマーシャル対象のタグクラス */
 	private static final Class<?> TARGET_TAG_CLASS = CommonTag.class;
 
 	public static void main(String[] args) {
@@ -32,12 +31,11 @@ public class ExcerptUnmarshalWithStAX {
 		UnmarshallerWrapper unmashallWrapper = new UnmarshallerWrapper(CommonTag.class);
 
 		// TODO XMLEventReaderへの変更
-		XMLStreamReader reader = null;
-		BufferedInputStream stream = null;
+		XMLStreamReader xmlReader = null;
 
-		try {
-			stream = new BufferedInputStream(new FileInputStream(INPUT_FILE));
-			reader = factory.createXMLStreamReader(stream);
+		try (BufferedReader reader = Files.newBufferedReader(Paths.get(TARGET_PATH)))
+		{
+			xmlReader = factory.createXMLStreamReader(reader);
 
 			// TODO フィルタの適用。
 			// StartElementだけフィルタ
@@ -49,12 +47,12 @@ public class ExcerptUnmarshalWithStAX {
 //			};
 //			reader = factory.createFilteredReader(reader, filter);
 
-			while (reader.hasNext()) {
-				int eventType = reader.next();
+			while (xmlReader.hasNext()) {
+				int eventType = xmlReader.next();
 
 				if (eventType == XMLStreamReader.START_ELEMENT) {
-					if (isTargetPoint(reader)) {
-						CommonTag tag = unmashallWrapper.unmarshal(reader);
+					if (isTargetPoint(xmlReader)) {
+						CommonTag tag = unmashallWrapper.unmarshal(xmlReader);
 						System.out.println(tag);
 					}
 				}
@@ -63,17 +61,10 @@ public class ExcerptUnmarshalWithStAX {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (stream != null) {
+			// XmlStreamReaderはAutoCloseableをImplementsしないため手動Close
+			if (xmlReader != null) {
 				try {
-					stream.close();
-				} catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-
-			if (reader != null) {
-				try {
-					reader.close();
+					xmlReader.close();
 				} catch (XMLStreamException xse) {
 					xse.printStackTrace();
 				}
